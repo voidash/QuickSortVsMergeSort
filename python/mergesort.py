@@ -31,8 +31,8 @@ def merge(left: list, right: list) -> list:
     return merged_list
 
         
-# unsorted = [14,1,633,223,12,1223,132423423,23423234231332,34]
-# print(mergesort(unsorted))
+unsorted = [14,1,633,223,12,1223,132423423,23423234231332,34]
+print(mergesort(unsorted))
 
 
 

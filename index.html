@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MergeSort and Quicksort visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet"> 
+</head>
+<style>
+    *{
+        font-family: 'Nunito Sans', sans-serif;
+    }
+    #numberOfElements{
+        width: 50%;
+    }
+    .run {
+        margin:20px;
+        display: flex;
+        width: 100%;
+    }
+    .runner{
+        font-size: 30px;
+        margin: 0 auto;
+    }
+    .visualizer-section {
+        width:95%;
+        margin:0 auto;
+        background-color: rgb(196, 90, 90);
+        padding:20px 0;
+    }
+    .data-section{
+        width:95%;
+        margin:0 auto;
+        background-color: azure;
+    }
+
+</style>
+<body>
+    <center style="margin-bottom: 30px;">
+        <h1>MergeSort vs Quicksort</h1>
+        <a href="mergesort.html" style="margin-right: 50px;">Step By Step MergeSort</a>
+        <a href="quicksort.html">Step By Step QuickSort</a>
+    </center>
+   <div class="visualizer-section">
+    <h3 style="text-align: center;">Visualization</h3>
+    <div style="display: flex; flex-direction: column; align-items:center;margin-bottom: 40px;">
+        <label for="numberOfElements">Number of Elements</label>
+        <input type="range" name="slider" id="numberOfElements" min="10" max="140" value="40">
+        <span class="numElem">12</span>
+    </div>
+    <div style="background: thistle; display: flex;justify-content: center;">
+        <canvas id="Canvas" style="border: 2px solid #000;"></canvas>
+    </div>
+    <div class="run">
+        <button class="runner">Run Sorting Process</button>
+    </div>
+</div> 
+<div class="data-section">
+    <h3>Data: number of elements Vs time plot</h3>
+
+    <h5>Specification of Computer that generated this data</h5>
+    <ul>
+        <li>Processor : Intel i7 8th generation 2.9Ghz</li>
+        <li>RAM: 16 GB 2666 MHz</li>
+    </ul>
+
+    <h5 style="text-align: center;">for 10000 Random elements</h5>
+    <p>When Quicksort and mergesort are tested with randomly generated data, the figures below show the result of that test.
+        Quicksort took around <b>0.14 seconds</b> for <b>10000 elements </b> and Mergesort took around <b>0.15 seconds</b> for <b>10000 elements</b> 
+    </p>
+    <div style="display: flex;">
+        <div>
+            <img src="./python/mergesort_random_10000.png" alt="">
+            <center>
+                <h4>Mergesort</h4>
+            </center>
+        </div>
+
+        <div>
+
+        <img src="./python/quicksort_random_test_10000.png" alt="">
+            <center>
+                <h4>Quicksort</h4>
+            </center>
+        </div>
+
+    </div>
+<div>
+    
+    <h5 style="text-align: center;">for 10000 Descending elements</h5>
+
+    <p>Mergesort shines with descending elements too as it took around <b>0.12 seconds</b> to sort <b>10000 descending sorted elements</b> to ascending order.
+        Quicksort rose to <b>0.20 seconds</b> at some point .
+
+</div>
+    <div style="display: flex;">
+        <div>
+            <img src="./python/mergesort_random_10000_descending.png" alt="">
+            <center>
+                <h4>Mergesort</h4>
+            </center>
+        </div>
+
+        <div>
+
+        <img src="./python/quicksort_random_10000_descending.png" alt="">
+            <center>
+                <h4>Quicksort</h4>
+            </center>
+        </div>
+
+    </div>
+
+<div>
+    
+    <h5 style="text-align: center;"> For 100000 random elements </h5>
+
+    <p>Mergesort took around <b>1.4 seconds</b> to sort <b>100000 elements</b> whereas quicksort took astounding <b>8.1 seconds</b> to sort 100000 elements. It is somewhat expected as mergesort worst case running time is logarithmic in nature but quicksort might resort to n^2 or quadratic trend.</p>
+
+</div>
+    <div style="display: flex;">
+        <div>
+            <img src="./python/mergesort_random_100000.png" alt="">
+            <center>
+                <h4>Mergesort</h4>
+            </center>
+        </div>
+
+        <div>
+
+        <img src="./python/quicksort_random_test_100000.png" alt="">
+            <center>
+                <h4>Quicksort</h4>
+            </center>
+        </div>
+
+    </div>
+</div>
+    <script src="./javascript/sort.js"></script>
+    
+</body>
+</html>

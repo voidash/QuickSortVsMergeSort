@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quicksort</title>
+
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+    <center>
+        <h1>QuickSort Visualizer</h1>
+    </center>
+    <div style="display: flex">
+        <input type="text" name="arrayInserter" id="arrayInsert" placeholder="insert array here i.e 10,3,2,12">
+        <br>
+        <button class="showSteps">Show Steps</button>
+    </div>
+    <h3>Default Array is [1,34,322,388,112,12,8] if you don't provide your own array</h3>
+    <div class="arrCell pivot">Color of Pindex </div>
+    <div class="arrCell highlight">Color of chosen Pivot</div>
+    <div class="arrCell i">Color of iterator value</div>
+<script>
+
+    let qarr = [1,34,322,388,112,12,8];
+    document.querySelector(".showSteps").addEventListener('click',(event) => {
+        let values = document.querySelector('#arrayInsert').value;
+        qarr = values.split(",");
+        qarr = qarr.map((data)=> {
+            return parseInt(data);
+        });
+        console.log(qarr.length);
+        QuickSort(0,qarr.length-1);
+        console.log(qarr);
+    });
+    function createArray(arr,pivot,highlight,i){
+        let arrayContainer = document.createElement("div");
+        arrayContainer.className += "arrRepr";
+        // let pivotAnnounce = document.createTextNode(`The pivot is ${arr[pivot]}`);
+        // arrayContainer.appendChild(pivotAnnounce);
+        arr = arr.map((elem,index) => {
+            let cell = document.createElement("div");
+            cell.textContent = elem + "";
+
+            if(index == pivot) cell.className += "pivot ";
+            else if(index == i) cell.className += "i ";
+            else if(index == highlight) cell.className += "highlight ";
+
+            cell.className += "arrCell";
+            return cell;
+        });
+
+        arr.forEach(element => {
+           arrayContainer.appendChild(element);
+        });
+
+        document.getElementsByTagName("body")[0].appendChild(arrayContainer);
+    }
+
+    function swap(data, i1, i2) {
+        let temp = data[i1];
+        data[i1] = data[i2];
+        data[i2] = temp;
+    }
+
+    function createBreak(){
+        let bodyNode = document.getElementsByTagName("body")[0];
+        divElem = document.createElement("hr");
+
+        bodyNode.appendChild(divElem);
+    }
+    function createText(text){
+        let bodyNode = document.getElementsByTagName("body")[0];
+        textNode = document.createTextNode(text);
+        divElem = document.createElement("div");
+        divElem.className += "text ";
+        divElem.appendChild(textNode);
+
+        bodyNode.appendChild(divElem);
+    }
+    function partition(start, end) {
+        createText(`Start Value is ${qarr[start]} and end value is ${qarr[end]}`);
+        var compare = end;
+        var pivotPos = start;
+        for (let i = start; i < end; i++) {
+            createText(`comparing ${qarr[i]} and ${qarr[compare]}`)
+            createArray(qarr,pivotPos,compare,i);
+            text = document.createTextNode(`Hello`);
+            if (qarr[i] <= qarr[compare]) {
+                swap(qarr, i, pivotPos);
+                createText(`swapping ${qarr[i]} and ${qarr[pivotPos]} since ${qarr[i]} is less than ${qarr[compare]}`);
+                pivotPos += 1;
+                createText(`new PIndex is ${qarr[pivotPos]}`);
+                createArray(qarr,pivotPos,compare,i);
+            }
+        }
+        createText(`finally swap the pivot to pindex so that all the elements smaller than it is on left side`);
+        swap(qarr, pivotPos, compare);
+        createBreak();
+        createArray(qarr,pivotPos);
+        createBreak();
+        return pivotPos;
+    }
+
+     function QuickSort(start, end) {
+        if (start >= end) return;
+        pivot = partition(start, end);
+        // createArray(qarr,pivot);
+        if (pivot >= qarr.length) return;
+        if (start <= pivot)
+             QuickSort(start, pivot - 1);
+        if (pivot <= end)
+            QuickSort(pivot, end);
+    }
+    // QuickSort(0,qarr.length - 1);
+
+</script>
+</body>
+</html>

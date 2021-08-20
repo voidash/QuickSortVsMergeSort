@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>MergeSort</title>
+</head>
+<body>
+
+    <center>
+        <h1>MergeSort Visualizer</h1>
+    </center>
+    <div style="display: flex">
+        <input type="text" name="arrayInserter" id="arrayInsert" placeholder="10,3,2,12">
+        <br>
+        <button class="showSteps">Show Steps</button>
+    </div>
+    <style>
+        #Canvas{
+            border:1px solid black;
+        }
+    </style>
+        <center>
+            <h3>Divide Elements to Pieces</h3>
+        </center>
+    <div style="display: flex; justify-content: center;">
+    <div style="border: 1px solid black; width:1000px; height: 600px;">
+        <div id="unmerged" style="position: relative;"></div>
+    </div>
+    </div>
+
+        <center>
+            <h3>First Merge then sort them one by one</h3>
+        </center>
+    <div style="display: flex; justify-content: center;">
+    <div style="border: 1px solid black; width:1000px; height: 600px;">
+        <div id="merged" style="position: relative;"></div>
+    </div>
+    </div>
+   <script>
+       var button = document.querySelector(".showSteps");
+       var arrayInsert = document.querySelector("#arrayInsert");
+       var arr = [];
+       var intermediate = [];
+
+    let arrayStack = new Object();
+    let maxDepth ;
+       button.addEventListener("click",() => {
+        var data = arrayInsert.value;
+        arr = data.split(",").map((value) => {
+            return parseInt(value)
+        });
+        intermediate = new Array().fill(0,0,arr.length);
+
+        maxDepth = parseInt(Math.log2(arr.length) + 2);
+        for(let i = 0 ; i< maxDepth; i++){
+            arrayStack[i] = new Array();
+        }
+        MergeSort(0,arr.length-1,0);
+        drawMerge();
+        console.log(arr);
+       })
+    //    var arr = [23,4,1,333,90,45,22,112,123,34];
+
+
+    function createArray(carr,posx, posy,toSort){
+        let arrayContainer = document.createElement("div");
+        arrayContainer.className += "arrRepr";
+        arrayContainer.style.position = "absolute";
+        arrayContainer.style.left = posx+"px";
+        arrayContainer.style.top = posy+"px";
+        if(arr.length > 10) arrayContainer.style.fontSize = "1rem";
+        else arrayContainer.style.fontSize = "2rem";
+
+
+        // let pivotAnnounce = document.createTextNode(`The pivot is ${arr[pivot]}`);
+        // arrayContainer.appendChild(pivotAnnounce);
+        let arrElems = [];
+        carr.forEach((elem,index)=>{
+            carr[index] = parseInt(carr[index]);
+        })
+
+        if(toSort) {
+             carr.sort(function(a,b) {
+                return a-b;
+            });
+        }
+        for (let index = 0; index < carr.length; index++) {
+            let cell = document.createElement("div");
+            cell.textContent = carr[index] + "";
+            cell.className += "arrCell";
+            arrElems[index] = cell;
+        };
+
+        arrElems.forEach(element => {
+           arrayContainer.appendChild(element);
+        });
+
+        document.getElementById("unmerged").appendChild(arrayContainer);
+        if(toSort)
+            document.getElementById("merged").appendChild(arrayContainer);
+    }
+
+
+function MergeSort(start, end,depth) {
+    let partition = parseInt((start + end) /2);
+
+    // createArray(start,end,500,100*depth);
+    let tempArr = [];
+    for(let i = start ; i <= end; i++){
+        tempArr.push(arr[i]);
+    }
+    arrayStack[depth].push(tempArr);
+
+    if (start >= end) return;
+
+    MergeSort(start, partition,depth+1);
+    MergeSort(partition + 1,end,depth+1);
+    merge(start, end);
+}
+function merge(start,end,moveX,moveY){
+    let partition = parseInt((start + end) / 2);
+    let start1 = start, start2 = partition + 1;
+    let end1 = partition, end2 = end;
+    let index = start;
+
+    while (start1 <= end1 && start2 <= end2) {
+        if (arr[start1] <= arr[start2]) {
+            intermediate[index] = arr[start1];
+            index++;
+            start1++;
+        } else if (arr[start2] < arr[start1]) {
+            intermediate[index] = arr[start2];
+            index++;
+            start2++;
+        }
+    }
+    
+    //if partitioning was not even, or if one of the partition had more amount
+    // of smaller elements than the other partition
+    // copy remaining elements
+    while (start1 <= end1) {
+        intermediate[index] = arr[start1];
+        start1++;
+        index++;
+    }
+
+    while (start2 <= end2) {
+        intermediate[index] = arr[start2];
+        start2++;
+        index++;
+    }
+    //now copy from intermediate back to array
+    index = start;
+    while (index <= end) {
+        arr[index] = intermediate[index];
+        index++;
+    }
+}
+
+function drawMerge() {
+    // initial size is 1000 px
+    // first depth gets centered 
+    // 2nd depth gets 500 and 500
+    // 3rd depth gets 250 ,250, 250, 250 and so on
+    document.querySelector("#unmerged").innerHTML = "";
+    document.querySelector("#merged").innerHTML = "";
+    let initial_size = 1000;
+    let y_count = 10;
+    for(let i = 0 ; i < maxDepth; i++){
+        if(i == 0) {
+            createArray(arrayStack[i][0],0,y_count);
+            createArray(arrayStack[i][0],0,y_count,true);
+            y_count+=100;
+        }else{
+            let start = 0;
+            for(var j = 0 ; j < Math.pow(2,i); j++){
+                createArray(arrayStack[i][j],start,y_count);
+                createArray(arrayStack[i][j],start,y_count,true);
+                start+=initial_size/arrayStack[i].length;
+            }
+            y_count+=100;
+        }
+    }
+}
+   </script>
+</body>
+</html>

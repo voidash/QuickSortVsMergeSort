@@ -1,0 +1,35 @@
+    .arrRepr{
+        display: flex;
+        margin: 20px;
+    }
+    .arrCell{
+        width:40;
+        height:40;
+        padding:10px;
+        border:1px solid black;
+    }
+    .pivot {
+        background: teal;
+        color:white;
+    }
+
+    .highlight {
+        background: yellowgreen;
+        color:white;
+    }
+    .i {
+        background: blanchedalmond;
+        color: black;
+    }
+    .text{
+        font-size:30px;
+        margin: 20px;
+    }
+    #arrayInsert {
+        font-size: 40px;
+        width:80%;
+    }
+    .showSteps {
+        font-size: 30px;
+        margin: 0 auto;
+    }
